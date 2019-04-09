@@ -34,7 +34,7 @@ $ ./train.sh
 $ ./track.sh
 ```
 
-### Result
+### Benchmark result
 - OTB2015
 
   `CIRfc_baseline` tracking with original model `pretrianed/CIResNet22.pth` from the author 
