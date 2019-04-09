@@ -4,7 +4,7 @@ This is a Pytorch implementation of CIR with train codes, which is mainly based 
 
 For more details about the CIR tracker please refer to the paper: [Deeper and Wider Siamese Networks for Real-Time Visual Tracking](https://arxiv.org/abs/1901.01660?context=cs) by Zhipeng Zhang and Houwen Peng.
 
-- NOTE: The author proposed CIR unit into both `SiamFC` and `SiamRPN`, repectively denoted as `SiamFC+` and `SiamRPN+`. Currently this repo only contained that of `SiamFC+` with backbone `ResNet22` and others will be listed into future work.
+**NOTE**: The author proposed CIR unit into both `SiamFC` and `SiamRPN`, repectively denoted as `SiamFC+` and `SiamRPN+`. Currently this repo only contained that of `SiamFC+` with backbone `ResNet22` and others will be listed into future work.
 
 ### Requirements
 - python 3.6
@@ -13,34 +13,45 @@ For more details about the CIR tracker please refer to the paper: [Deeper and Wi
 - opencv == 3.1.0
 
 ### Training
-- Data preparation
+- data preparation
 
-  Follow the instructions in [SiamFC-PyTorch](https://github.com/StrangerZhang/SiamFC-PyTorch) to curate the VID dataset and create the soft links `data_curated` and `data_curated.lmdb` to folder `dataset`.
+  1. Follow the instructions in [SiamFC-PyTorch](https://github.com/StrangerZhang/SiamFC-PyTorch) to curate the VID dataset
   
-- Start training
+  2. Create the soft links `data_curated` and `data_curated.lmdb` to folder `dataset`.
+  
+- start training by
 ```
 $ ./train.sh
 ```
 
 ### Tracking
-- Data preparation
+- data preparation
 
-  Create the soft link `OTB2015` to folder `dataset`
+  1. Create the soft link `OTB2015` to folder `dataset`
  
-- Start tracking
+- start tracking by
 ```
 $ ./track.sh
 ```
 
 ### Result
 - OTB2015
+
   `CIRfc_baseline` tracking with original model `pretrianed/CIResNet22.pth` from the author 
   `CIRfc_pretrained` tracking with model `models/CIResNet22_pretrained.pth` trained from scratch
+
+
+SiamFC+  | Success | Percision
+:-------------: | :-------------: | :-------------:
+paper  | 0.618 | 0.820
+here  | 0.601 | 0.796
+
 <center class="half">
-   <img src="https://i.postimg.cc/sxZCTVZN/success-plots.png"/>
-   <img src="https://i.postimg.cc/Y9PwN4jF/precision-plots.png">
+   <img src="https://i.postimg.cc/sxZCTVZN/success-plots.png" width = "500"/><img src="https://i.postimg.cc/Y9PwN4jF/precision-plots.png" width = "500"/>
 </center>
 
 ### Future work
-- [] Further performance improvement of `SiamFC+`. Welcome to any advice and suggestions. My email address is jensen.zhoujh@qq.com.
-- [] Support for `SiamRPN+`
+- [ ] Further performance improvement of `SiamFC+`. Welcome to any advice and suggestions. My email address is jensen.zhoujh@qq.com.
+- [ ] Support for `SiamRPN+`
+
+### Reference
