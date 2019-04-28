@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # Written by Jinghao Zhou
 # Email: jensen.zhoujh@qq.com
-# Details: generate prior anchors for RPN-based trackers
+# Details: generate prior targets
 # Date: 2019.4.28
 # ------------------------------------------------------------------------------
 
