@@ -2,278 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cfbc6651-7fc8-4b79-8885-f9724a19235e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin/track_siamrpn.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin/train_siamrpn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/custom_transforms.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/groundtruth_rect.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0001.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0002.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0003.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0004.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0005.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0006.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0007.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0008.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0009.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0010.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0011.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0012.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0013.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0014.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0015.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0016.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0017.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0018.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0019.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0020.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0021.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0022.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0023.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0024.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0025.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0026.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0027.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0028.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0029.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0030.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0031.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0032.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0033.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0034.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0035.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0036.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0037.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0038.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0039.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0040.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0041.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0042.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0043.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0044.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0045.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0046.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0047.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0048.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0049.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0050.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0051.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0052.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0053.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0054.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0055.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0056.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0057.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0058.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0059.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0060.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0061.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0062.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0063.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0064.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0065.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0066.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0067.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0068.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0069.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0070.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0071.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0072.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0073.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0074.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0075.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0076.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0077.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0078.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0079.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0080.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0081.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0082.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0083.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0084.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0085.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0086.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0087.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0088.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0089.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0090.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0091.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0092.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0093.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0094.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0095.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0096.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0097.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0098.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0099.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0100.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0101.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0102.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0103.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0104.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0105.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0106.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0107.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0108.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0109.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0110.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0111.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0112.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0113.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0114.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0115.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0116.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0117.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0118.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0119.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0120.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0121.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0122.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0123.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0124.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0125.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0126.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0127.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0128.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0129.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0130.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0131.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0132.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0133.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0134.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0135.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0136.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0137.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0138.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0139.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0140.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0141.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0142.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0143.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0144.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0145.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0146.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0147.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0148.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0149.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0150.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0151.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0152.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0153.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0154.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0155.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0156.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0157.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0158.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0159.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0160.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0161.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0162.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0163.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0164.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0165.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0166.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0167.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0168.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0169.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0170.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0171.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0172.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0173.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0174.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0175.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0176.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0177.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0178.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0179.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0180.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0181.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0182.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0183.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0184.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0185.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0186.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0187.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0188.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0189.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0190.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0191.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0192.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0193.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0194.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0195.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0196.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0197.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0198.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0199.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0200.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0201.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0202.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0203.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0204.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0205.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0206.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0207.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0208.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0209.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0210.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0211.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0212.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0213.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0214.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0215.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0216.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0217.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0218.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0219.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0220.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0221.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0222.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0223.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0224.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0225.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0226.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0227.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0228.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0229.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0230.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0231.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0232.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0233.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0234.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0235.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0236.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0237.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0238.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0239.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0240.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0241.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0242.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0243.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0244.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0245.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0246.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0247.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0248.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0249.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0250.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0251.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/David3/img/0252.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/connect.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/features.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/siamfc.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pretrain/CIRIncep22.pth" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pretrain/CIResNet22.pth" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/track.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/track_siamfc.py" beforeDir="false" afterPath="$PROJECT_DIR$/bin/track_siamfc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/train_siamfc.py" beforeDir="false" afterPath="$PROJECT_DIR$/bin/train_siamfc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/OTB2015" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/data_curated" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/data_curated.lmdb" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/track.sh" beforeDir="false" afterPath="$PROJECT_DIR$/track.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/train.sh" beforeDir="false" afterPath="$PROJECT_DIR$/train.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/utils.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -283,51 +22,104 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/utils/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="728">
-              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="266">
+              <caret line="110" column="19" selection-start-line="110" selection-start-column="19" selection-end-line="110" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="track.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/track.sh">
+      <file leaf-file-name="siamrpn.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/net/siamrpn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="260">
+              <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train.sh">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/net/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="182">
+              <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#27#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="track_siamfc.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bin/track_siamfc.py">
+      <file leaf-file-name="connect.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/net/connect.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7347">
-              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+            <state relative-caret-position="1326">
+              <caret line="51" column="26" selection-start-line="51" selection-start-column="26" selection-end-line="51" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_siamfc.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/bin/train_siamfc.py">
-          <provider selected="true" editor-type-id="text-editor" />
+      <file leaf-file-name="dataset.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/dataset/dataset.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="292">
+              <caret line="127" column="37" selection-start-line="127" selection-start-column="37" selection-end-line="127" selection-end-column="37" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/utils/utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="747">
+              <caret line="240" column="28" selection-start-line="240" selection-start-column="28" selection-end-line="240" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="custom_transforms.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/dataset/custom_transforms.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="468">
+              <caret line="18" column="34" lean-forward="true" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="generate_target.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/dataset/generate_target.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="491">
+              <caret line="37" column="21" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="siamfc.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/net/siamfc.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="409">
+              <caret line="23" column="34" lean-forward="true" selection-start-line="23" selection-start-column="34" selection-end-line="23" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -339,6 +131,33 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>self.s2p_flags</find>
+      <find>penalty_k</find>
+      <find>train_score</find>
+      <find>train_score_size</find>
+      <find>dataset</find>
+      <find>_create_gt_mask</find>
+      <find>weighted_loss</find>
+      <find>self.training</find>
+      <find>input</find>
+      <find>score</find>
+      <find>random_crop_size</find>
+      <find>model</find>
+      <find>exemplar_img</find>
+      <find>self.freeze</find>
+      <find>config</find>
+      <find>exe</find>
+      <find>exem_stretch</find>
+      <find>self.train_gt</find>
+      <find>compute_target</find>
+      <find>self.anchors</find>
+      <find>add_box</find>
+      <find>compute_iou</find>
+      <find>scale_range</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -346,15 +165,31 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/track.sh" />
+        <option value="$PROJECT_DIR$/lib/net/siamrpn.py" />
+        <option value="$PROJECT_DIR$/bin/test_siamrpn.py" />
         <option value="$PROJECT_DIR$/bin/track_siamfc.py" />
+        <option value="$PROJECT_DIR$/bin/track_siamrpn.py" />
+        <option value="$PROJECT_DIR$/lib/dataset/custom_transforms.py" />
+        <option value="$PROJECT_DIR$/lib/net/siamfc.py" />
+        <option value="$PROJECT_DIR$/lib/dataset/generate_scoremap.py" />
+        <option value="$PROJECT_DIR$/lib/dataset/generate_anchors.py" />
+        <option value="$PROJECT_DIR$/lib/utils/loss.py" />
+        <option value="$PROJECT_DIR$/lib/net/features.py" />
+        <option value="$PROJECT_DIR$/bin/train_siamfc.py" />
+        <option value="$PROJECT_DIR$/bin/train_siamrpn.py" />
+        <option value="$PROJECT_DIR$/lib/net/models.py" />
+        <option value="$PROJECT_DIR$/lib/net/connect.py" />
+        <option value="$PROJECT_DIR$/lib/utils/config.py" />
+        <option value="$PROJECT_DIR$/lib/utils/utils.py" />
+        <option value="$PROJECT_DIR$/lib/dataset/dataset.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="-341" />
-    <option name="y" value="322" />
-    <option name="width" value="2583" />
-    <option name="height" value="1626" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="171" />
+    <option name="y" value="598" />
+    <option name="width" value="1907" />
+    <option name="height" value="1620" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -364,7 +199,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -377,14 +211,43 @@
               <item name="CIR" type="462c0819:PsiDirectoryNode" />
               <item name="bin" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="CIR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CIR" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CIR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CIR" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="dataset" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CIR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CIR" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="net" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CIR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CIR" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CIR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CIR" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="E:/dailydropout" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -423,27 +286,32 @@
     <frame x="-7" y="-7" width="1721" height="1041" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24985163" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1934718" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="2" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/README.md">
@@ -472,13 +340,226 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bin/track_siamfc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7347">
+        <state relative-caret-position="286">
           <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="e#57#72#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bin/train_siamfc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#35#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/track.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/scp07881/home/yl/tracking/Siamese-RPN/nohup.out">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1849407">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/scp51555/home/yl/tracking/1open-vot2/data/OTB/Human4/groundtruth_rect.2.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/scp51170/home/yl/tracking/1open-vot2/data/OTB/Human4/groundtruth_rect.1.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/create_lmdb.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/dataset/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/dataset/generate_scoremap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/utils/loss.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-306">
+          <caret line="22" column="20" lean-forward="true" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
+          <folding>
+            <element signature="e#296#313#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/net/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/utils/config.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/track_siamrpn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="16" column="42" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/track_siamfc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="309" column="39" selection-start-line="309" selection-start-column="39" selection-end-line="309" selection-end-column="39" />
+          <folding>
+            <element signature="e#57#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/train_siamrpn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="92" column="24" lean-forward="true" selection-start-line="92" selection-start-column="24" selection-end-line="92" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/train_siamfc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="92" column="24" lean-forward="true" selection-start-line="92" selection-start-column="24" selection-end-line="92" selection-end-column="24" />
+          <folding>
+            <element signature="e#35#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/net/features.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+          <folding>
+            <element signature="e#23#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/net/connect.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1326">
+          <caret line="51" column="26" selection-start-line="51" selection-start-column="26" selection-end-line="51" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/dataset/custom_transforms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="18" column="34" lean-forward="true" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/utils/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="110" column="19" selection-start-line="110" selection-start-column="19" selection-end-line="110" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/net/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/net/siamrpn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/net/siamfc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="409">
+          <caret line="23" column="34" lean-forward="true" selection-start-line="23" selection-start-column="34" selection-end-line="23" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/dataset/generate_target.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="37" column="21" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/utils/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="747">
+          <caret line="240" column="28" selection-start-line="240" selection-start-column="28" selection-end-line="240" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/scp41356/home/yl/tracking/CIR/train.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/dataset/dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="127" column="37" selection-start-line="127" selection-start-column="37" selection-end-line="127" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

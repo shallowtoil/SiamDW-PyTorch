@@ -17,11 +17,12 @@ from sklearn.model_selection import train_test_split
 from tensorboardX import SummaryWriter
 
 sys.path.append(os.getcwd())
-from lib.utils.config import config
+from lib.utils.config import configSiamFC as config
 import lib.net.models as models
-from lib.dataset.dataset import ImagnetVIDDataset
+from lib.dataset.dataset import SiamFCDataset
 from lib.dataset.custom_transforms import ToTensor, RandomStretch, \
     RandomCrop, CenterCrop
+from lib.utils.loss import weighted_binary_cross_entropy
 
 torch.manual_seed(1234)
 
@@ -45,7 +46,6 @@ def train():
             test_size=1-config.train_ratio, random_state=config.seed)
 
     # define transforms
-    random_crop_size = config.instance_size - 2 * config.total_stride
     train_z_transforms = transforms.Compose([
         RandomStretch(),
         CenterCrop((config.exemplar_size, config.exemplar_size)),
@@ -53,7 +53,7 @@ def train():
     ])
     train_x_transforms = transforms.Compose([
         RandomStretch(),
-        RandomCrop((random_crop_size, random_crop_size),
+        RandomCrop((config.instance_size, config.instance_size),
                     config.max_translate),
         ToTensor()
     ])
@@ -69,16 +69,18 @@ def train():
     db = lmdb.open(data_dir+'.lmdb', readonly=True, map_size=int(50e9))
 
     # create dataset
-    train_dataset = ImagnetVIDDataset(db, train_videos, data_dir,
-            train_z_transforms, train_x_transforms)
-    valid_dataset = ImagnetVIDDataset(db, valid_videos, data_dir,
-            valid_z_transforms, valid_x_transforms, training=False)
+    train_dataset = SiamFCDataset(db, train_videos, data_dir,
+                                      train_z_transforms, train_x_transforms, training=True)
+    valid_dataset = SiamFCDataset(db, valid_videos, data_dir,
+                                      valid_z_transforms, valid_x_transforms, training=False)
     
     # create dataloader
     trainloader = DataLoader(train_dataset, batch_size=config.train_batch_size,
-            shuffle=True, pin_memory=True, num_workers=config.train_num_workers, drop_last=True)
+                             shuffle=True, pin_memory=True,
+                             num_workers=config.train_num_workers, drop_last=True)
     validloader = DataLoader(valid_dataset, batch_size=config.valid_batch_size,
-            shuffle=False, pin_memory=True, num_workers=config.valid_num_workers, drop_last=True)
+                             shuffle=False, pin_memory=True,
+                             num_workers=config.valid_num_workers, drop_last=True)
 
     # create summary writer
     if not os.path.exists(config.log_dir):
@@ -87,7 +89,7 @@ def train():
 
 
     # start training + validation
-    model = models.__dict__[args.arch](imagenet=True, freeze=False, tracking=False)
+    model = models.__dict__[args.arch](tracking=False)
     model = model.cuda()
     optimizer = torch.optim.SGD(model.parameters(), lr=config.lr,
             momentum=config.momentum, weight_decay=config.weight_decay)
@@ -100,13 +102,16 @@ def train():
         model.train()
         tic = time.clock()
         for i, data in enumerate(trainloader):
-            exemplar_imgs, instance_imgs = data
+            exemplar_imgs, instance_imgs, masks, weights = data
             exemplar_var, instance_var = Variable(exemplar_imgs.cuda()), \
                     Variable(instance_imgs.cuda())
+            masks, weights = masks.cuda(), weights.cuda()
             optimizer.zero_grad()
             model.template(exemplar_var) #[bz,3,127,127]->[bz,1,5,5]
             outputs = model.track(instance_var) #[bz,3,239,239]->[bz,1,19,19]
-            loss = model.weighted_loss(outputs) #[bz,1,15,15]
+
+            loss = weighted_binary_cross_entropy(outputs, masks, weights)
+
             loss.backward()
             optimizer.step()
             step = epoch * len(trainloader) + i

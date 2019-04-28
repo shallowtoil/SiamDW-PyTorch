@@ -14,7 +14,7 @@ sys.path.append(os.getcwd())
 import lib.net.models as models
 from torch.autograd import Variable
 from lib.utils.utils import load_pretrain, cxy_wh_2_rect, get_min_max_bbox, load_dataset, load_video, judge_overlap
-from lib.utils.config import config as p
+from lib.utils.config import configSiamFC as p
 
 parser = argparse.ArgumentParser(description='PyTorch Tracking Test')
 parser.add_argument('--arch', dest='arch', default='SiamFC_Res22', help='architecture of pretrained model')
