@@ -20,8 +20,8 @@ sys.path.append(os.getcwd())
 from lib.utils.config import configSiamRPN as config
 import lib.net.models as models
 from lib.dataset.dataset import SiamRPNDataset
-from lib.dataset.custom_transforms import ToTensor, RandomStretch, \
-    RandomCrop, CenterCrop
+from lib.dataset.custom_transforms import ToTensor_with_bbox, RandomStretch_with_bbox, \
+    RandomCrop_with_bbox, CenterCrop
 
 torch.manual_seed(1234)
 
@@ -46,17 +46,15 @@ def train():
                                                   test_size=1 - config.train_ratio, random_state=config.seed)
 
     # define transforms
-    random_crop_size = config.instance_size - 2 * config.total_stride
     train_z_transforms = transforms.Compose([
-        RandomStretch(),
-        CenterCrop((config.exemplar_size, config.exemplar_size)),
-        ToTensor()
+        RandomStretch_with_bbox(),
+        CenterCrop_with_bbox((config.exemplar_size, config.exemplar_size)),
+        ToTensor_with_bbox()
     ])
     train_x_transforms = transforms.Compose([
-        RandomStretch(),
-        RandomCrop((random_crop_size, random_crop_size),
-                   config.max_translate),
-        ToTensor()
+        RandomStretch_with_bbox(),
+        RandomCrop_with_bbox((config.instance_size, config.instance_size), config.max_translate),
+        ToTensor_with_bbox()
     ])
     valid_z_transforms = transforms.Compose([
         CenterCrop((config.exemplar_size, config.exemplar_size)),
@@ -72,6 +70,7 @@ def train():
     # create dataset
     train_dataset = SiamRPNDataset(db, train_videos, data_dir,
                                       train_z_transforms, train_x_transforms, training=true)
+    anchors = train_dataset.anchors
     valid_dataset = SiamRPNDataset(db, valid_videos, data_dir,
                                       valid_z_transforms, valid_x_transforms, training=False)
 
@@ -97,25 +96,44 @@ def train():
     # scheduler = StepLR(optimizer, step_size=config.step_size,
     #         gamma=config.gamma)
 
-    for epoch in range(config.epoch):
+    for epoch in range(1, config.epoch + 1):
         train_loss = []
         model.train()
         tic = time.clock()
+
+        loss_temp_cls = 0
+        loss_temp_reg = 0
         for i, data in enumerate(trainloader):
-            exemplar_imgs, instance_imgs = data
+            exemplar_imgs, instance_imgs, regression_target, conf_target = data
+            regression_target, conf_target = regression_target.cuda(), conf_target.cuda()
             exemplar_var, instance_var = Variable(exemplar_imgs.cuda()), \
                                          Variable(instance_imgs.cuda())
             optimizer.zero_grad()
             model.template(exemplar_var)  # [bz,3,127,127]->[bz,1,5,5]
-            outputs = model.track(instance_var)  # [bz,3,239,239]->[bz,1,19,19]
-            loss = model.weighted_loss(outputs)  # [bz,1,15,15]
+            pred_cls, pred_reg = model.track(instance_var)  # [bz,3,239,239]->[bz,1,19,19]
+            pred_conf = pred_cls.reshape(-1, 2, config.anchor_num * config.score_size * \
+                                           config.score_size).permute(0, 2, 1)
+            pred_offset = pred_reg.reshape(-1, 4, config.anchor_num * config.score_size * \
+                                                  config.score_size).permute(0, 2, 1)
+            cls_loss = rpn_cross_entropy_balance(pred_conf, conf_target, config.num_pos, config.num_neg, anchors,
+                                                 ohem_pos=config.ohem_pos, ohem_neg=config.ohem_neg)
+            reg_loss = rpn_smoothL1(pred_offset, regression_target, conf_target, config.num_pos, ohem=config.ohem_reg)
+            loss = cls_loss + config.lamb * reg_loss
             loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), config.clip)
             optimizer.step()
-            step = epoch * len(trainloader) + i
-            summary_writer.add_scalar('train/loss', loss.data, step)
-            if (i + 1) % 20 == 0:
-                print("EPOCH %d STEP %d, loss: %.4f" %
-                      (epoch, i + 1, loss.data))
+
+            step = (epoch - 1) * len(trainloader) + i
+            summary_writer.add_scalar('train/cls_loss', cls_loss.data, step)
+            summary_writer.add_scalar('train/reg_loss', reg_loss.data, step)
+            train_loss.append(loss.detach().cpu())
+            loss_temp_cls += cls_loss.detach().cpu().numpy()
+            loss_temp_reg += reg_loss.detach().cpu().numpy()
+            if (i + 1) % config.show_interval == 0:
+                print("[epoch %2d][iter %4d] cls_loss: %.4f, reg_loss: %.4f" %
+                      (epoch, i + 1, cls_loss.data / config.show_interval, reg_loss / config.show_interval))
+                loss_temp_cls = 0
+                loss_temp_reg = 0
             train_loss.append(loss.data.item())
         train_loss = np.mean(train_loss)
         toc = time.clock() - tic
@@ -123,23 +141,31 @@ def train():
 
         valid_loss = []
         model.eval()
-        for i, data in enumerate(tqdm(validloader)):
-            exemplar_imgs, instance_imgs = data
+        for i, data in enumerate(validloader):
+            exemplar_imgs, instance_imgs, regression_target, conf_target = data
+            regression_target, conf_target = regression_target.cuda(), conf_target.cuda()
             exemplar_var, instance_var = Variable(exemplar_imgs.cuda()), \
                                          Variable(instance_imgs.cuda())
             model.template(exemplar_var)  # [bz,3,127,127]->[bz,1,5,5]
-            outputs = model.track(instance_var)  # [bz,3,255,255]->[bz,1,21,21]
-            loss = model.weighted_loss(outputs)  # [bz,1,17,17]
-            valid_loss.append(loss.data.item())
+            pred_cls, pred_reg = model.track(instance_var)  # [bz,3,239,239]->[bz,1,19,19]
+            pred_conf = pred_cls.reshape(-1, 2, config.anchor_num * config.score_size * \
+                                         config.score_size).permute(0, 2, 1)
+            pred_offset = pred_reg.reshape(-1, 4, config.anchor_num * config.score_size * \
+                                           config.score_size).permute(0, 2, 1)
+            cls_loss = rpn_cross_entropy_balance(pred_conf, conf_target, config.num_pos, config.num_neg, anchors,
+                                                 ohem_pos=config.ohem_pos, ohem_neg=config.ohem_neg)
+            reg_loss = rpn_smoothL1(pred_offset, regression_target, conf_target, config.num_pos, ohem=config.ohem_reg)
+            loss = cls_loss + config.lamb * reg_loss
+            valid_loss.append(loss.detach().cpu())
         valid_loss = np.mean(valid_loss)
-        print("EPOCH %d valid_loss: %.4f, train_loss: %.4f" %
+        print("[epoch %d] valid_loss: %.4f, train_loss: %.4f" %
               (epoch, valid_loss, train_loss))
         summary_writer.add_scalar('valid/loss',
                                   valid_loss, (epoch + 1) * len(trainloader))
+
         torch.save(model.cpu().state_dict(), args.resume)
         model.cuda()
         scheduler.step()
-
 
 if __name__ == '__main__':
     train()

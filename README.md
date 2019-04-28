@@ -47,9 +47,9 @@ For more details about the CIR tracker please refer to the paper: [Deeper and Wi
 Models  | Success | Percision
 :-------------: | :-------------: | :-------------:
 SiamFC_Res22  | 0.639 | 0.839
-**SiamFC_Res22(mine)**  | **0.613** | **0.804**
 SiamRPN_Res22  | 0.662 | 0.872
-**SiamRPN_Res22(mine)**  | ** ** | ** **
+SiamFC_Res22(mine)  | 0.613 | 0.804
+SiamRPN_Res22(mine)  |  |
 
 <center class="half">
    <img src="https://i.postimg.cc/sxZCTVZN/success-plots.png" width = "400"/><img src="https://i.postimg.cc/Y9PwN4jF/precision-plots.png" width = "400"/>

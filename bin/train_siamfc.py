@@ -97,7 +97,7 @@ def train():
     # scheduler = StepLR(optimizer, step_size=config.step_size,
     #         gamma=config.gamma)
 
-    for epoch in range(config.epoch):
+    for epoch in range(1, config.epoch + 1):
         train_loss = []
         model.train()
         tic = time.clock()
@@ -114,9 +114,9 @@ def train():
 
             loss.backward()
             optimizer.step()
-            step = epoch * len(trainloader) + i
+            step = (epoch - 1) * len(trainloader) + i
             summary_writer.add_scalar('train/loss', loss.data, step)
-            if (i+1) % 20 == 0:
+            if (i + 1) % 20 == 0:
                 print("EPOCH %d STEP %d, loss: %.4f" %
                       (epoch, i+1, loss.data))
             train_loss.append(loss.data.item())

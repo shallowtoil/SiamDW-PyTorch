@@ -34,13 +34,20 @@ class RandomStretch_with_bbox(object):
         Args:
             sample[0](numpy array): 3 or 1 dim image\
             sample[1]: mean value of one image
+        Returns:
+            gt_w, w of target bbox
+            gt_h, h of target bbox
         """
-        mean = sample[1]
+        gt_w, gt_h = sample[1:]
         scale_h = 1.0 + np.random.uniform(-self.max_stretch, self.max_stretch)
         scale_w = 1.0 + np.random.uniform(-self.max_stretch, self.max_stretch)
         h, w = sample[0].shape[:2]
         shape = (int(h * scale_h), int(w * scale_w))
-        return cv2.resize(sample[0], shape, cv2.INTER_LINEAR), mean
+        scale_w = int(w * scale_w) / w
+        scale_h = int(h * scale_h) / h
+        gt_w = gt_w * scale_w
+        gt_h = gt_h * scale_h
+        return cv2.resize(sample[0], shape, cv2.INTER_LINEAR), gt_w, gt_h
 
 class CenterCrop(object):
     def __init__(self, size):
@@ -81,6 +88,50 @@ class CenterCrop(object):
             im_patch = cv2.copyMakeBorder(im_patch, top, bottom, left, right,
                     cv2.BORDER_CONSTANT, value=0)
         return im_patch
+
+class CenterCrop_with_bbox(object):
+    def __init__(self, size):
+        """Crop the image in the center according the given size
+            if size greater than image size, zero padding will adpot
+        Args:
+            size (tuple): desired size
+        """
+        self.size = size
+
+    def __call__(self, sample):
+        """
+        Args:
+            sample(numpy array): 3 or 1 dim image
+        Returns:
+            gt_w, w of target bbox
+            gt_h, h of target bbox
+        """
+        shape = sample[0].shape[:2]
+        gt_w, gt_h = sample[1:]
+        cy, cx = (shape[0]-1) // 2, (shape[1]-1) // 2
+        ymin, xmin = cy - self.size[0]//2, cx - self.size[1] // 2
+        ymax, xmax = cy + self.size[0]//2 + self.size[0] % 2,\
+                     cx + self.size[1]//2 + self.size[1] % 2
+        left = right = top = bottom = 0
+        im_h, im_w = shape
+        if xmin < 0:
+            left = int(abs(xmin))
+        if xmax > im_w:
+            right = int(xmax - im_w)
+        if ymin < 0:
+            top = int(abs(ymin))
+        if ymax > im_h:
+            bottom = int(ymax - im_h)
+
+        xmin = int(max(0, xmin))
+        xmax = int(min(im_w, xmax))
+        ymin = int(max(0, ymin))
+        ymax = int(min(im_h, ymax))
+        im_patch = sample[0][ymin:ymax, xmin:xmax]
+        if left != 0 or right !=0 or top!=0 or bottom!=0:
+            im_patch = cv2.copyMakeBorder(im_patch, top, bottom, left, right,
+                    cv2.BORDER_CONSTANT, value=0)
+        return im_patch, gt_w, gt_h
 
 class RandomCrop(object):
     def __init__(self, size, max_translate):
@@ -147,18 +198,24 @@ class RandomCrop_with_bbox(object):
         """
         Args:
             sample(numpy array): 3 or 1 dim image
+        Returns:
+            im_patch, image after random center crop
+            gt_cx, x shift of center
+            gt_cy, y shift center
+            gt_w, w of target bbox
+            gt_h, h of target bbox
         """
         shape = sample[0].shape[:2]
         # np.ndarray, shape(3,1)
-        mean = tuple([int(x) for x in sample[1]])
+        gt_w, gt_h = sample[1:]
 
         cy_o = (shape[0] - 1) // 2
         cx_o = (shape[1] - 1) // 2
         # uniform distribution
         cy = np.random.randint(cy_o - self.max_translate,
-                               cy_o + self.max_translate+1)
+                               cy_o + self.max_translate + 1)
         cx = np.random.randint(cx_o - self.max_translate,
-                               cx_o + self.max_translate+1)
+                               cx_o + self.max_translate + 1)
         assert abs(cy-cy_o) <= self.max_translate and \
                 abs(cx-cx_o) <= self.max_translate
         ymin = cy - self.size[0] // 2
@@ -184,7 +241,11 @@ class RandomCrop_with_bbox(object):
         if left != 0 or right !=0 or top!=0 or bottom!=0:
             im_patch = cv2.copyMakeBorder(im_patch, top, bottom, left, right,
                     cv2.BORDER_CONSTANT, value=mean)
-        return im_patch, np.array([cy_o-cy, cx_o-cx])
+
+        gt_cx = cx_o - cx
+        gt_cy = cy_o - cy
+
+        return im_patch, gt_cx, gt_cy, gt_w, gt_h
 
 class ColorAug(object):
     def __init__(self, type_in='z'):
@@ -232,7 +293,5 @@ class ToTensor(object):
 
 class ToTensor_with_bbox(object):
     def __call__(self, sample):
-        # sample[0] = sample[0].transpose(2, 0, 1)
         img = sample[0].transpose(2, 0, 1)
-        d = sample[1]
-        return torch.from_numpy(img.astype(np.float32)), d
+        return torch.from_numpy(img.astype(np.float32)), sample[1:]

@@ -147,75 +147,84 @@ class SiamRPNDataset(Dataset):
         return regression_target, label
 
     def __getitem__(self, idx):
-        while True:
+        all_idx = np.arange(self.num)
+        np.random.shuffle(all_idx)
+        all_idx = np.insert(all_idx, 0, idx, 0)
+        for idx in all_idx:
             idx = idx % len(self.video_names)
             video = self.video_names[idx]
             trajs = self.meta_data[video]
             # sample one trajs
-            if len(trajs.keys()) > 0:
-                break
+            if len(trajs.keys()) == 0:
+                continue
+            trkid = np.random.choice(list(trajs.keys()))
+            traj = trajs[trkid]
+            assert len(traj) > 1, "video_name: {}".format(video)
+            # sample exemplar
+            exemplar_idx = np.random.choice(list(range(len(traj))))
+            if 'ILSVRC2015' in video:
+                exemplar_name = \
+                    glob.glob(os.path.join(self.data_dir, video, traj[exemplar_idx] + ".{:02d}.x*.jpg".format(trkid)))[
+                        0]
             else:
-                idx = np.random.randint(self.num)
-        # sample one trajs
-        trkid = np.random.choice(list(trajs.keys()))
-        traj = trajs[trkid]
-        assert len(traj) > 1, "video_name: {}".format(video)
-        # sample exemplar
-        exemplar_idx = np.random.choice(list(range(len(traj))))
-        if 'ILSVRC2015' in video:
-            exemplar_name = \
-                glob.glob(os.path.join(self.data_dir, video, traj[exemplar_idx] + ".{:02d}.x*.jpg".format(trkid)))[0]
-        else:
-            exemplar_name = \
-                glob.glob(os.path.join(self.data_dir, video, traj[exemplar_idx] + ".{}.x*.jpg".format(trkid)))[0]
-        exemplar_img = self.imread(exemplar_name)
-        exemplar_img = cv2.cvtColor(exemplar_img, cv2.COLOR_BGR2RGB) #TODO: have or have not?
-        # sample instance
-        if 'ILSVRC2015' in exemplar_name:
-            frame_range = config.frame_range_vid
-        else:
-            frame_range = config.frame_range_ytb
-        low_idx = max(0, exemplar_idx - frame_range)
-        up_idx = min(len(traj), exemplar_idx + frame_range + 1)
-        # create sample weight, if the sample are far away from center
-        # the probability being choosen are high
-        weights = self._sample_weights(exemplar_idx, low_idx, up_idx, config.sample_type)
-        instance = np.random.choice(traj[low_idx:exemplar_idx] + traj[exemplar_idx + 1:up_idx], p=weights)
-        if 'ILSVRC2015' in video:
-            instance_name = glob.glob(os.path.join(self.data_dir, video, instance + ".{:02d}.x*.jpg".format(trkid)))[0]
-        else:
-            instance_name = glob.glob(os.path.join(self.data_dir, video, instance + ".{}.x*.jpg".format(trkid)))[0]
-        instance_img = self.imread(instance_name)
-        instance_img = cv2.cvtColor(instance_img, cv2.COLOR_BGR2RGB) #TODO: have or have not?
-        gt_w, gt_h = float(instance_name.split('_')[-2]), float(instance_name.split('_')[-1][:-4])
-        if np.random.rand(1) < config.gray_ratio:
-            exemplar_img = cv2.cvtColor(exemplar_img, cv2.COLOR_RGB2GRAY)
-            exemplar_img = cv2.cvtColor(exemplar_img, cv2.COLOR_GRAY2RGB)
-            instance_img = cv2.cvtColor(instance_img, cv2.COLOR_RGB2GRAY)
-            instance_img = cv2.cvtColor(instance_img, cv2.COLOR_GRAY2RGB)
-        # data augmentation
-        if config.exem_stretch:
-            exemplar_img, _, _ = self.RandomStretch(exemplar_img, 0, 0)
-        exemplar_img, _ = crop_and_pad(exemplar_img, (exemplar_img.shape[1] - 1) / 2,
-                                       (exemplar_img.shape[0] - 1) / 2, self.center_crop_size,
-                                       self.center_crop_size)
-        instance_img, gt_w, gt_h = self.RandomStretch(instance_img, gt_w, gt_h)
-        im_h, im_w, _ = instance_img.shape
-        cy_o = (im_h - 1) / 2
-        cx_o = (im_w - 1) / 2
-        cy = cy_o + np.random.randint(- self.max_translate, self.max_translate + 1)
-        cx = cx_o + np.random.randint(- self.max_translate, self.max_translate + 1)
-        gt_cx = cx_o - cx
-        gt_cy = cy_o - cy
-        instance_img, scale = crop_and_pad(instance_img, cx, cy, self.random_crop_size, self.random_crop_size)
+                exemplar_name = \
+                    glob.glob(os.path.join(self.data_dir, video, traj[exemplar_idx] + ".{}.x*.jpg".format(trkid)))[0]
+            exemplar_gt_w, exemplar_gt_h, exemplar_w_image, exemplar_h_image = \
+                float(exemplar_name.split('_')[-4]), float(exemplar_name.split('_')[-3]), \
+                float(exemplar_name.split('_')[-2]), float(exemplar_name.split('_')[-1][:-4])
+            exemplar_ratio = min(exemplar_gt_w / exemplar_gt_h, exemplar_gt_h / exemplar_gt_w)
+            exemplar_scale = exemplar_gt_w * exemplar_gt_h / (exemplar_w_image * exemplar_h_image)
+            if not config.scale_range[0] <= exemplar_scale < config.scale_range[1]:
+                continue
+            if not config.ratio_range[0] <= exemplar_ratio < config.ratio_range[1]:
+                continue
+            exemplar_img = self.imread(exemplar_name)
+            exemplar_img = cv2.cvtColor(exemplar_img, cv2.COLOR_BGR2RGB)
+            # sample instance
+            if 'ILSVRC2015' in exemplar_name:
+                frame_range = config.frame_range_vid
+            else:
+                frame_range = config.frame_range_ytb
+            low_idx = max(0, exemplar_idx - frame_range)
+            up_idx = min(len(traj), exemplar_idx + frame_range + 1)
+            # create sample weight, if the sample are far away from center
+            # the probability being choosen are high
+            weights = self._sample_weights(exemplar_idx, low_idx, up_idx, config.sample_type)
+            instance = np.random.choice(traj[low_idx:exemplar_idx] + traj[exemplar_idx + 1:up_idx], p=weights)
+            if 'ILSVRC2015' in video:
+                instance_name = \
+                    glob.glob(os.path.join(self.data_dir, video, instance + ".{:02d}.x*.jpg".format(trkid)))[0]
+            else:
+                instance_name = glob.glob(os.path.join(self.data_dir, video, instance + ".{}.x*.jpg".format(trkid)))[0]
+            instance_gt_w, instance_gt_h, instance_w_image, instance_h_image = \
+                float(instance_name.split('_')[-4]), float(instance_name.split('_')[-3]), \
+                float(instance_name.split('_')[-2]), float(instance_name.split('_')[-1][:-4])
+            instance_ratio = min(instance_gt_w / instance_gt_h, instance_gt_h / instance_gt_w)
+            instance_scale = instance_gt_w * instance_gt_h / (instance_w_image * instance_h_image)
+            if not config.scale_range[0] <= instance_scale < config.scale_range[1]:
+                continue
+            if not config.ratio_range[0] <= instance_ratio < config.ratio_range[1]:
+                continue
+            instance_img = self.imread(instance_name)
+            instance_img = cv2.cvtColor(instance_img, cv2.COLOR_BGR2RGB)
+            if np.random.rand(1) < config.gray_ratio:
+                exemplar_img = cv2.cvtColor(exemplar_img, cv2.COLOR_RGB2GRAY)
+                exemplar_img = cv2.cvtColor(exemplar_img, cv2.COLOR_GRAY2RGB)
+                instance_img = cv2.cvtColor(instance_img, cv2.COLOR_RGB2GRAY)
+                instance_img = cv2.cvtColor(instance_img, cv2.COLOR_GRAY2RGB)
+            # data augmentation
+            exemplar_img, exemplar_gt_w, exemplar_gt_h = self.z_transforms(exemplar_img)
+            instance_img, gt_cx, gt_cy, gt_w, gt_h = self.x_transforms(instance_img)
+            # robust test
+            # frame = add_box_img(exemplar_img, np.array([[0, 0, exemplar_gt_w, exemplar_gt_h]]), color=(0, 255, 0))
+            # cv2.imwrite('exemplar_img.jpg', frame)
+            # frame = add_box_img(instance_img_1, np.array([[gt_cx, gt_cy, gt_w, gt_h]]), color=(0, 255, 0))
+            # cv2.imwrite('instance_img.jpg', frame)
+            # create target
+            regression_target, conf_target = self.compute_target(self.anchors,
+                                                np.array(list(map(round, [gt_cx, gt_cy, gt_w, gt_h]))))
 
-        exemplar_img = self.z_transforms(exemplar_img)
-        instance_img = self.x_transforms(instance_img)
-        # create target
-        regression_target, conf_target = self.compute_target(self.anchors,
-                                                             np.array(list(map(round, [gt_cx, gt_cy, gt_w, gt_h]))))
-
-        return exemplar_img, instance_img, regression_target, conf_target.astype(np.int64)
+            return exemplar_img, instance_img, regression_target, conf_target.astype(np.int64)
 
     def __len__(self):
         return self.num
