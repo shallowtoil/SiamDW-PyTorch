@@ -1,0 +1,68 @@
+{
+    "SiamFC_Res22": {
+        "OTB2013": {
+            "exemplar_size": 135,
+            "instance_size": 263,
+            "scale_step": 1.0482,
+            "scale_lr": 0.3629,
+            "scale_penalty": 0.9997,
+            "w_influence": 0.3896
+        },
+        "OTB2015": {
+            "exemplar_size": 135,
+            "instance_size": 263,
+            "scale_step": 1.1897,
+            "scale_lr": 0.2226,
+            "scale_penalty": 0.9370,
+            "w_influence": 0.2897
+        },
+
+        "VOT2015": {
+            "scale_step": 1.1190,
+            "scale_lr": 0.4373,
+            "scale_penalty": 0.9811,
+            "w_influence": 0.2569
+        },
+        "VOT2016": {
+            "scale_step": 1.1535,
+            "scale_lr": 0.4596,
+            "scale_penalty": 0.9259,
+            "w_influence": 0.3309
+        },
+        "VOT2017": {
+            "scale_step": 1.1466,
+            "scale_lr": 0.2061,
+            "scale_penalty": 0.9994,
+            "w_influence": 0.3242
+        }
+    },
+
+    "SiamRPN_Res22": {
+        "OTB2013": {
+            "penalty_k": 0.2560,
+            "lr": 0.4390,
+            "window_influence": 0.0740
+        },
+        "OTB2015": {
+            "penalty_k": 0.8410,
+            "lr": 0.7140,
+            "window_influence": 0.3900
+        },
+
+        "VOT2015": {
+            "penalty_k":  0.8950,
+            "lr": 0.6540,
+            "window_influence": 0.3700
+        },
+        "VOT2016": {
+            "penalty_k": 0.7110,
+            "lr": 0.7010,
+            "window_influence": 0.3550
+        },
+        "VOT2017": {
+            "penalty_k": 0.038,
+            "lr": 0.388,
+            "window_influence": 0.347
+        }
+    }
+}
