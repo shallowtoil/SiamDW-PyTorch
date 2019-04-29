@@ -1,4 +1,4 @@
-# CIR-Pytorch
+# SiamDW-Pytorch
 
 This is a Pytorch implementation of SiamDW with train codes, which is mainly based on [deeper_wider_siamese_trackers](https://github.com/cvpr2019/deeper_wider_siamese_trackers) and [Siamese-RPN](https://github.com/HelloRicky123/Siamese-RPN). I re-format my code with reference to the author's official code [SiamDW](https://github.com/researchmm/SiamDW). 
 
@@ -29,7 +29,7 @@ The repo is still under development.
 
 - chosse the training dataset by set the parameters in `lib/utils/config.py`.
 
-  If you would like to use both `VID` and `YTB` dataset to train `SiamRPN+`, then just simply set both `VID_used` and `YTB_used` into True.
+  For example, if you would like to use both `VID` and `YTB` dataset to train `SiamRPN+`, then just simply set both `VID_used` and `YTB_used` into `True`.
   
 - choose the model to be trained by modifying `train.sh`, e.g,  to train `SiamFC+` using command 
     ```
@@ -64,7 +64,7 @@ SiamFC_Res22(mine)  | 0.632 | 0.831
 SiamRPN_Res22(mine)  |  |
 
 <center class="half">
-   <img src="https://i.postimg.cc/sxZCTVZN/success-plots.png" width = "400"/><img src="https://i.postimg.cc/Y9PwN4jF/precision-plots.png" width = "400"/>
+   <img src="https://i.postimg.cc/sxZCTVZN/success-plots.png" width = "400"/> <img src="https://i.postimg.cc/Y9PwN4jF/precision-plots.png" width = "400"/>
 </center>
 
 ### Future work
