@@ -9,7 +9,7 @@ For more details about the CIR tracker please refer to the paper: [Deeper and Wi
 The repo is still under development.
 
 ### Requirements
-- python 3.6
+- python == 3.6
 - pytorch == 0.3.1
 - numpy == 1.12.1
 - opencv == 3.1.0
@@ -17,7 +17,7 @@ The repo is still under development.
 ### Training
 - data preparation
 
-  1. Follow the instructions in [SiamFC-PyTorch](https://github.com/StrangerZhang/SiamFC-PyTorch) to curate the VID dataset
+  1. Follow the instructions in [Siamese-RPN](https://github.com/HelloRicky123/Siamese-RPN) to curate the `VID` and `YTB` dataset. If you also want to use `GOT10K`, follow the same instructions as above or download the curated data by [author](https://github.com/researchmm/SiamDW).
   
   2. Create the soft links `data_curated` and `data_curated.lmdb` to folder `dataset`.
 

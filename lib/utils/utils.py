@@ -11,77 +11,29 @@ import os
 from shapely.geometry import Polygon, box
 from os.path import join, realpath, dirname, normpath
 
+# ------------------------
+# basic tools
+# ------------------------
 
-## for OTB benchmark
-def load_dataset(dataset):
-    # buffer controls whether load all images
-    info = {}
-
-    if 'OTB' in dataset:
-        base_path = join(os.getcwd(), 'dataset', dataset)
-        json_path = join(os.getcwd(), 'dataset', dataset, dataset + '.json')
-        info = json.load(open(json_path, 'r'))
-        for v in info.keys():
-            # path_name = info[v]['video_dir']
-            info[v]['image_files'] = [join(base_path, im_f) for im_f in info[v]['img_names']]
-            info[v]['gt'] = np.array(info[v]['gt_rect'])-[1, 1, 0, 0]
-            # we do not use the anno in original files
-            info[v]['name'] = v
-
-    elif 'VOT' in dataset:
-        base_path = join(os.getcwd(), 'dataset', dataset)
-        list_path = join(base_path, 'list.txt')
-        with open(list_path) as f:
-            videos = [v.strip() for v in f.readlines()]
-        videos = sorted(videos)
-        for video in videos:
-            video_path = join(base_path, video)
-            image_path = join(video_path, '*.jpg')
-            image_files = sorted(glob.glob(image_path))
-            if len(image_files) == 0:  # VOT2018
-                image_path = join(video_path, 'color', '*.jpg')
-                image_files = sorted(glob.glob(image_path))
-            gt_path = join(video_path, 'groundtruth.txt')
-            gt = np.loadtxt(gt_path, delimiter=',').astype(np.float64)
-            if gt.shape[1] == 4:
-                gt = np.column_stack((gt[:, 0], gt[:, 1], gt[:, 0], gt[:, 1] + gt[:, 3],
-                                      gt[:, 0] + gt[:, 2], gt[:, 1] + gt[:, 3], gt[:, 0] + gt[:, 2], gt[:, 1]))
-
-            info[video] = {'image_files': image_files, 'gt': gt, 'name': video}
-
-    else:
-        print('Not support now, edit for other dataset youself...')
-        exit()
-
-    return info
+def load_json(json_path):
+    assert(os.path.exists(json_path))
+    cfg = json.load(open(json_path, 'r'))
+    return cfg
 
 
-## for a single video
-def load_video(video):
-    # buffer controls whether load all images
-    info = {}
-    info[video] = {}
-
-    base_path = normpath(join(realpath(dirname(__file__)), '../dataset', video))
-
-    # ground truth
-    gt_path = join(base_path, 'groundtruth_rect.txt')
-    gt = np.loadtxt(gt_path, delimiter=',')
-    gt = gt - [1, 1, 0, 0]   # OTB for python (if video not from OTB, please delete it)
-
-    # img file name
-    img_path = join(base_path, 'img', '*jpg')
-    image_files = sorted(glob.glob(img_path))
-
-    # info summary
-    info[video]['name'] = video
-    info[video]['image_files'] = [join(base_path, im_f) for im_f in img_names]
-    info[video]['gt'] = gt
-
-    return info
+def to_torch(ndarray):
+    return torch.from_numpy(ndarray)
 
 
-## for loading pretrained model
+def im_to_torch(img):
+    img = np.transpose(img, (2, 0, 1))  # C*H*W
+    img = to_torch(img).float()
+    return img
+
+# ------------------------
+# model tools
+# ------------------------
+
 def check_keys(model, pretrained_state_dict):
     ckpt_keys = set(pretrained_state_dict.keys())
     model_keys = set(model.state_dict().keys())
@@ -117,8 +69,10 @@ def load_pretrain(model, pretrained_path):
     model.load_state_dict(pretrained_dict, strict=False)
     return model
 
+# ------------------------
+# BBOX/RPN tools
+# ------------------------
 
-# others
 def cxy_wh_2_rect(pos, sz):
     return np.array([pos[0]-sz[0]/2, pos[1]-sz[1]/2, sz[0], sz[1]])  # 0-index
 
@@ -155,10 +109,6 @@ def judge_overlap(poly, rect):
     # The intersection
     overlap = polygon_shape.intersection(gridcell_shape).area
     return True if overlap > 1 else False
-
-# ------------------------
-# BBOX/RPN tools
-# ------------------------
 
 def compute_iou(anchors, box):
     if np.array(anchors).ndim == 1:
@@ -239,3 +189,138 @@ def box_transform(anchors, gt_box):
     target_h = np.log(gt_h / anchor_h)
     regression_target = np.hstack((target_x, target_y, target_w, target_h))
     return regression_target
+
+# ------------------------
+# video tools
+# ------------------------
+
+def load_dataset(dataset):
+    # buffer controls whether load all images
+    info = {}
+
+    if 'OTB' in dataset:
+        base_path = join(os.getcwd(), 'dataset', dataset)
+        json_path = join(os.getcwd(), 'dataset', dataset, dataset + '.json')
+        info = json.load(open(json_path, 'r'))
+        for v in info.keys():
+            # path_name = info[v]['video_dir']
+            info[v]['image_files'] = [join(base_path, im_f) for im_f in info[v]['img_names']]
+            info[v]['gt'] = np.array(info[v]['gt_rect'])-[1, 1, 0, 0]
+            # we do not use the anno in original files
+            info[v]['name'] = v
+
+    elif 'VOT' in dataset:
+        base_path = join(os.getcwd(), 'dataset', dataset)
+        list_path = join(base_path, 'list.txt')
+        with open(list_path) as f:
+            videos = [v.strip() for v in f.readlines()]
+        videos = sorted(videos)
+        for video in videos:
+            video_path = join(base_path, video)
+            image_path = join(video_path, '*.jpg')
+            image_files = sorted(glob.glob(image_path))
+            if len(image_files) == 0:  # VOT2018
+                image_path = join(video_path, 'color', '*.jpg')
+                image_files = sorted(glob.glob(image_path))
+            gt_path = join(video_path, 'groundtruth.txt')
+            gt = np.loadtxt(gt_path, delimiter=',').astype(np.float64)
+            if gt.shape[1] == 4:
+                gt = np.column_stack((gt[:, 0], gt[:, 1], gt[:, 0], gt[:, 1] + gt[:, 3],
+                                      gt[:, 0] + gt[:, 2], gt[:, 1] + gt[:, 3], gt[:, 0] + gt[:, 2], gt[:, 1]))
+
+            info[video] = {'image_files': image_files, 'gt': gt, 'name': video}
+
+    else:
+        print('Not support now, edit for other dataset youself...')
+        exit()
+
+    return info
+
+def load_video(video):
+    # buffer controls whether load all images
+    info = {}
+    info[video] = {}
+
+    base_path = normpath(join(realpath(dirname(__file__)), '../dataset', video))
+
+    # ground truth
+    gt_path = join(base_path, 'groundtruth_rect.txt')
+    gt = np.loadtxt(gt_path, delimiter=',')
+    gt = gt - [1, 1, 0, 0]   # OTB for python (if video not from OTB, please delete it)
+
+    # img file name
+    img_path = join(base_path, 'img', '*jpg')
+    image_files = sorted(glob.glob(img_path))
+
+    # info summary
+    info[video]['name'] = video
+    info[video]['image_files'] = [join(base_path, im_f) for im_f in img_names]
+    info[video]['gt'] = gt
+
+    return info
+
+# ------------------------
+# tracking tools
+# ------------------------
+
+def get_subwindow_tracking(im, pos, model_sz, original_sz, avg_chans, out_mode='torch'):
+    if isinstance(pos, float):
+        pos = [pos, pos]
+
+    sz = original_sz
+    im_sz = im.shape
+    c = (original_sz + 1) / 2
+    context_xmin = round(pos[0] - c)
+    context_xmax = context_xmin + sz - 1
+    context_ymin = round(pos[1] - c)
+    context_ymax = context_ymin + sz - 1
+    left_pad = int(max(0., -context_xmin))
+    top_pad = int(max(0., -context_ymin))
+    right_pad = int(max(0., context_xmax - im_sz[1] + 1))
+    bottom_pad = int(max(0., context_ymax - im_sz[0] + 1))
+
+    context_xmin = context_xmin + left_pad
+    context_xmax = context_xmax + left_pad
+    context_ymin = context_ymin + top_pad
+    context_ymax = context_ymax + top_pad
+
+    # zzp: a more easy speed version
+    r, c, k = im.shape
+    if any([top_pad, bottom_pad, left_pad, right_pad]):
+        te_im = np.zeros((r + top_pad + bottom_pad, c + left_pad + right_pad, k), np.uint8)
+        te_im[top_pad:top_pad + r, left_pad:left_pad + c, :] = im
+        if top_pad:
+            te_im[0:top_pad, left_pad:left_pad + c, :] = avg_chans
+        if bottom_pad:
+            te_im[r + top_pad:, left_pad:left_pad + c, :] = avg_chans
+        if left_pad:
+            te_im[:, 0:left_pad, :] = avg_chans
+        if right_pad:
+            te_im[:, c + left_pad:, :] = avg_chans
+        im_patch_original = te_im[int(context_ymin):int(context_ymax + 1), int(context_xmin):int(context_xmax + 1), :]
+    else:
+        im_patch_original = im[int(context_ymin):int(context_ymax + 1), int(context_xmin):int(context_xmax + 1), :]
+
+    if not np.array_equal(model_sz, original_sz):
+        im_patch = cv2.resize(im_patch_original, (model_sz, model_sz))
+    else:
+        im_patch = im_patch_original
+    return im_to_torch(im_patch.copy()) if out_mode in 'torch' else im_patch
+
+
+def make_scale_pyramid(im, pos, in_side_scaled, out_side, avg_chans):
+    in_side_scaled = [round(x) for x in in_side_scaled]
+    num_scale = len(in_side_scaled)
+    pyramid = torch.zeros(num_scale, 3, out_side, out_side)
+    max_target_side = in_side_scaled[-1]
+    min_target_side = in_side_scaled[0]
+    beta = out_side / min_target_side
+
+    search_side = round(beta * max_target_side)
+    search_region = get_subwindow_tracking(im, pos, int(search_side), int(max_target_side), avg_chans, out_mode='np')
+
+    for s, temp in enumerate(in_side_scaled):
+        target_side = round(beta * temp)
+        pyramid[s, :] = get_subwindow_tracking(search_region, (1 + search_side) / 2, out_side, target_side, avg_chans)
+
+    return pyramid
