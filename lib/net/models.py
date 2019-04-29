@@ -8,9 +8,7 @@ class SiamFC_Res22(SiamFC_):
     def __init__(self, tracking=True, **kwargs):
         super(SiamFC_Res22, self).__init__(**kwargs)
         self.tracking = tracking
-        self.imagenet = configSiamFC.pretrained
-        self.freeze = configSiamFC.fix_former_3_layers
-        self.features = ResNet22(self.imagenet, self.freeze)
+        self.features = ResNet22(pretrain=configSiamFC.load_imagenet)
         self.connect_model = Corr_Up(tracking=self.tracking)
 
 # class SiamFC_Incep22(SiamFC_):
@@ -24,9 +22,7 @@ class SiamRPN_Res22(SiamRPN_):
     def __init__(self, tracking=True, **kwargs):
         super(SiamRPNRes22, self).__init__(**kwargs)
         self.tracking = tracking
-        self.imagenet = configSiamRPN.pretrained
-        self.freeze = configSiamRPN.fix_former_3_layers
-        self.features = ResNet22(self.imagenet, self.freeze)
+        self.features = ResNet22(pretrain=configSiamRPN.load_imagenet)
         self.connect_model = RPN_Up(tracking=self.tracking,
                                     anchor_nums=self.anchor_nums,
                                     inchannels=self.features.feature_size,

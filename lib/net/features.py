@@ -5,24 +5,20 @@ import torch.nn.functional as F
 import torchvision
 
 class ResNet22(nn.Module):
-    def __init__(self, imagenet=False, freeze=False):
+    def __init__(self, pretrain=False):
         super(ResNet22, self).__init__()
         # first two layer of ResNet50
-        self.imagenet = imagenet
-        self.freeze = freeze
         self.s2p_flags = [False, True]
         self.features = ResNet(Bottleneck_CI, [3, 4], [True, False], self.s2p_flags)
-        if self.imagenet:
-            self.load_pretrained()
-        if self.freeze:
-            self.freeze_model()
+        if pretrain:
+            self.load_imagenet_2()
         self.feature_size = 512
 
     def forward(self, x):
         x = self.features(x)
         return x
 
-    def load_pretrained(self):
+    def load_imagenet(self):
         model_dict = self.features.state_dict()
         resnet50 = torchvision.models.resnet50(pretrained=True)
         pretrained_dict = resnet50.state_dict()
@@ -50,9 +46,17 @@ class ResNet22(nn.Module):
         self.features.load_state_dict(load_dict)
         print('Imagenet pretrained loading done')
 
-    def freeze_model(self):
-        for param in self.features.conv1.parameters():
-            param.requires_grad = False
+    def load_imagenet_2(self):
+        pretrain_dict = torch.load('models/pretrain/CIResNet22_PRETRAIN.model')
+        self.features.load_state_dict({k.replace('features.features.', ''):v for k,v in pretrain_dict.items()})
+
+    def freeze_layers(self):
+        if torch.cuda.device_count() > 1:
+            for param in self.features.module.conv1.parameters():
+                param.requires_grad = False
+        else:
+            for param in self.features.conv1.parameters():
+                param.requires_grad = False
         print('conv1 weight frozen')
 
 class Incep22(nn.Module):

@@ -28,7 +28,7 @@ torch.manual_seed(1234)
 
 parser = argparse.ArgumentParser(description='PyTorch Training')
 parser.add_argument('--arch', dest='arch', default='SiamFC_Res22', help='architecture of to-be-trained model')
-parser.add_argument('--resume', default='./models/CIResNet22.pth', type=str, help='pretrained model')
+parser.add_argument('--resume', default='CIResNet22', type=str, help='pretrained model')
 
 def train():
     # initialize config
@@ -87,20 +87,23 @@ def train():
         os.mkdir(config.log_dir)
     summary_writer = SummaryWriter(config.log_dir)
 
-
     # start training + validation
     model = models.__dict__[args.arch](tracking=False)
     model = model.cuda()
     optimizer = torch.optim.SGD(model.parameters(), lr=config.lr,
             momentum=config.momentum, weight_decay=config.weight_decay)
     scheduler = ExponentialLR(optimizer, gamma=config.gamma)
-    # scheduler = StepLR(optimizer, step_size=config.step_size,
-    #         gamma=config.gamma)
 
+    if torch.cuda.device_count() > 1:
+        model = nn.DataParallel(model)
     for epoch in range(1, config.epoch + 1):
+        if config.fix_former_layers:
+            model.freeze_layers()
         train_loss = []
         model.train()
         tic = time.clock()
+
+        loss_temp = 0
         for i, data in enumerate(trainloader):
             exemplar_imgs, instance_imgs, masks, weights = data
             exemplar_var, instance_var = Variable(exemplar_imgs.cuda()), \
@@ -109,17 +112,18 @@ def train():
             optimizer.zero_grad()
             model.template(exemplar_var) #[bz,3,127,127]->[bz,1,5,5]
             outputs = model.track(instance_var) #[bz,3,239,239]->[bz,1,19,19]
-
             loss = weighted_binary_cross_entropy(outputs, masks, weights)
-
             loss.backward()
             optimizer.step()
+
             step = (epoch - 1) * len(trainloader) + i
             summary_writer.add_scalar('train/loss', loss.data, step)
-            if (i + 1) % 20 == 0:
-                print("EPOCH %d STEP %d, loss: %.4f" %
-                      (epoch, i+1, loss.data))
-            train_loss.append(loss.data.item())
+            train_loss.append(loss.detach().cpu())
+            loss_temp += cls_loss.detach().cpu().numpy()
+            if (i + 1) % config.show_interval == 0:
+                print("[epoch %2d][iter %4d], loss: %.4f" %
+                      (epoch, i + 1, loss_temp / config.show_interval))
+                loss_temp = 0
         train_loss = np.mean(train_loss)
         toc = time.clock() - tic
         print('%ss total for one epoch' % toc)
@@ -127,7 +131,7 @@ def train():
 
         valid_loss = []
         model.eval()
-        for i, data in enumerate(tqdm(validloader)):
+        for i, data in enumerate(validloader):
             exemplar_imgs, instance_imgs = data
             exemplar_var, instance_var = Variable(exemplar_imgs.cuda()),\
                                          Variable(instance_imgs.cuda())
@@ -136,11 +140,21 @@ def train():
             loss = model.weighted_loss(outputs) #[bz,1,17,17]
             valid_loss.append(loss.data.item())
         valid_loss = np.mean(valid_loss)
-        print("EPOCH %d valid_loss: %.4f, train_loss: %.4f" %
-                (epoch, valid_loss, train_loss))
+        print("[epoch %d] valid_loss: %.4f, train_loss: %.4f" % (epoch, valid_loss, train_loss))
         summary_writer.add_scalar('valid/loss', 
-                valid_loss, (epoch+1)*len(trainloader))
-        torch.save(model.cpu().state_dict(), args.resume)
+                valid_loss, (epoch + 1) * len(trainloader))
+        if epoch % config.save_interval == 0:
+            if not os.path.exists('./models/'):
+                os.makedirs("./models/")
+            save_name = "./models/" + args.resume + "_{}.pth".format(epoch)
+            new_state_dict = model.state_dict()
+            if torch.cuda.device_count() > 1:
+                new_state_dict = OrderedDict()
+                for k, v in model.state_dict().items():
+                    namekey = k[7:]  # remove `module.`
+                    new_state_dict[namekey] = v
+            torch.save(new_state_dict, save_name)
+            print('save model: {}'.format(save_name))
         model.cuda()
         scheduler.step()
 

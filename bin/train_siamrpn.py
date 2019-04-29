@@ -27,7 +27,7 @@ torch.manual_seed(1234)
 
 parser = argparse.ArgumentParser(description='PyTorch Training')
 parser.add_argument('--arch', dest='arch', default='SiamRPN_Res22', help='architecture of to-be-trained model')
-parser.add_argument('--resume', default='./models/CIResNet22.pth', type=str, help='pretrained model')
+parser.add_argument('--resume', default='CIResNet22', type=str, help='pretrained model')
 
 
 def train():
@@ -93,10 +93,12 @@ def train():
     optimizer = torch.optim.SGD(model.parameters(), lr=config.lr,
                                 momentum=config.momentum, weight_decay=config.weight_decay)
     scheduler = ExponentialLR(optimizer, gamma=config.gamma)
-    # scheduler = StepLR(optimizer, step_size=config.step_size,
-    #         gamma=config.gamma)
 
+    if torch.cuda.device_count() > 1:
+        model = nn.DataParallel(model)
     for epoch in range(1, config.epoch + 1):
+        if config.fix_former_layers:
+            model.freeze_layers()
         train_loss = []
         model.train()
         tic = time.clock()
@@ -134,7 +136,6 @@ def train():
                       (epoch, i + 1, cls_loss.data / config.show_interval, reg_loss / config.show_interval))
                 loss_temp_cls = 0
                 loss_temp_reg = 0
-            train_loss.append(loss.data.item())
         train_loss = np.mean(train_loss)
         toc = time.clock() - tic
         print('%ss total for one epoch' % toc)
@@ -158,12 +159,21 @@ def train():
             loss = cls_loss + config.lamb * reg_loss
             valid_loss.append(loss.detach().cpu())
         valid_loss = np.mean(valid_loss)
-        print("[epoch %d] valid_loss: %.4f, train_loss: %.4f" %
-              (epoch, valid_loss, train_loss))
+        print("[epoch %d] valid_loss: %.4f, train_loss: %.4f" % (epoch, valid_loss, train_loss))
         summary_writer.add_scalar('valid/loss',
                                   valid_loss, (epoch + 1) * len(trainloader))
-
-        torch.save(model.cpu().state_dict(), args.resume)
+        if epoch % config.save_interval == 0:
+            if not os.path.exists('./models/'):
+                os.makedirs("./models/")
+            save_name = "./models/" + args.resume + "_{}.pth".format(epoch)
+            new_state_dict = model.state_dict()
+            if torch.cuda.device_count() > 1:
+                new_state_dict = OrderedDict()
+                for k, v in model.state_dict().items():
+                    namekey = k[7:]  # remove `module.`
+                    new_state_dict[namekey] = v
+            torch.save(new_state_dict, save_name)
+            print('save model: {}'.format(save_name))
         model.cuda()
         scheduler.step()
 

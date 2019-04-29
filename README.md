@@ -6,6 +6,8 @@ For more details about the CIR tracker please refer to the paper: [Deeper and Wi
 
 **NOTE**: The author proposed CIR unit into both `SiamFC` and `SiamRPN`, repectively denoted as `SiamFC+` and `SiamRPN+`. Currently this repo only contained that of `SiamFC+` and `SiamRPN+` with backbone `ResNet22` and others will be listed into future work.
 
+The repo is still under development.
+
 ### Requirements
 - python 3.6
 - pytorch == 0.3.1
@@ -19,6 +21,12 @@ For more details about the CIR tracker please refer to the paper: [Deeper and Wi
   
   2. Create the soft links `data_curated` and `data_curated.lmdb` to folder `dataset`.
 
+- download pretrained model
+
+  1. Download pretrained model from [OneDrive](https://mailccsf-my.sharepoint.com/:u:/g/personal/zhipeng_mail_ccsf_edu/EXLC8YnM9B9Kq5KcqfjbFg4B-OIwp6ZflvW_p0s0K3R1_Q?e=XNqj3n), [GoogleDrive](https://drive.google.com/open?id=1RIMB9542xXp60bZwndTvmIt2jogxAIX3) or [BaiduDrive](https://pan.baidu.com/s/1TmIW8AsLEr9Mk3qSsT1pIg). Extracted code for BaiduDrive is `7rfu`.
+  
+  2. Put them to `models/pretrain` directory. 
+  
 - choose the model to be trained by modifying `train.sh`, e.g,  to train `SiamFC+` using command 
     ```
     CUDA_VISIBLE_DEVICES=0 python bin/train_siamfc.py --arch SiamFC_Res22 --resume ./models/SiamFC_Res22_mine.pth
@@ -48,7 +56,7 @@ Models  | Success | Percision
 :-------------: | :-------------: | :-------------:
 SiamFC_Res22  | 0.639 | 0.839
 SiamRPN_Res22  | 0.662 | 0.872
-SiamFC_Res22(mine)  | 0.613 | 0.804
+SiamFC_Res22(mine)  | 0.632 | 0.831
 SiamRPN_Res22(mine)  |  |
 
 <center class="half">
@@ -57,6 +65,7 @@ SiamRPN_Res22(mine)  |  |
 
 ### Future work
 - [ ] Further performance improvement of `SiamFC+` and `SiamRPN+`. Welcome to any advice and suggestions. My email address is jensen.zhoujh@qq.com.
+- [ ] Flexible support for co-training of `VID`, `GOT10K`, `YTB` dataset.
 
 ### Reference
 [1] Zhipeng Zhang, Houwen Peng. Deeper and Wider Siamese Networks for Real-Time Visual Tracking. Conference on Computer Vision and Pattern Recognition (CVPR). IEEE, 2019.

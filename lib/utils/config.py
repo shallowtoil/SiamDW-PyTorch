@@ -5,6 +5,12 @@ class ConfigSiamFC:
     """
     sampling related
     """
+    VID_used = True                        # whether to use VID dataset
+    GOT10K_used = False                    # whether to use GOT10K dataset
+    YTB_used = False                       # whether to use YTB dataset
+    frame_range_vid = 100                  # frame range of choosing the instance
+    frame_range_got10k = 100               # frame range of choosing the instance
+    frame_range_ytb = 1                    # frame range of choosing the instance
     exemplar_size = 127                    # exemplar size
     instance_size = 255                    # instance size
     context_amount = 0.5                   # context amount
@@ -18,25 +24,27 @@ class ConfigSiamFC:
     """
     training related
     """
-    pretrained = True                      # whether to use the imagenet pretrained model
-    fix_former_3_layers = True             # whether to fix the first 3 layers
+    load_imagenet = True                   # whether to use the imagenet pretrained model
+    fix_former_layers = True               # whether to fix the first layers
     epoch = 50                             # total epoch for training
-    lr = 1e-2  # learning rate of SGD
-    momentum = 0.9  # momentum of SGD
-    weight_decay = 1e-4  # weight decay of optimizator
+    lr = 1e-2                              # learning rate of SGD
+    momentum = 0.9                         # momentum of SGD
+    weight_decay = 1e-4                    # weight decay of optimizator
     # step_size = 25                       # step size of LR_Schedular
     # gamma = 0.1                          # decay rate of LR_Schedular
-    gamma = 0.8709635899560806  # decay rate of EP_Schedular
+    gamma = 0.8709635899560806             # decay rate of EP_Schedular
     num_per_epoch = 53200                  # num of samples per epoch
     train_ratio = 0.9                      # training ratio of VID dataset
-    frame_range = 100                      # frame range of choosing the instance
+    max_translate = 3                      # max translation of random shift
     train_batch_size = 16                  # training batch size
     valid_batch_size = 16                  # validation batch size
     train_num_workers = 8                  # number of workers of train dataloader
     valid_num_workers = 8                  # number of workers of validation dataloader
     log_dir = './models/logs'              # log dirs
     data_dir = 'dataset/data_curated'      # VID trian dir
-    max_translate = 3  # max translation of random shift
+    save_interval = 1                      # model save interval
+    show_interval = 100                    # info print interval
+
     radius = 16                            # radius of positive label
     response_scale = 1e-3                  # normalize of response, adjust the scale of response
 
@@ -46,7 +54,7 @@ class ConfigSiamFC:
     """
     num_scale = 3                          # number of scales
     scale_step = 1.0375                    # scale step of instance image
-    scale_penalty = 0.9745  # scale penalty
+    scale_penalty = 0.9745                 # scale penalty
     scale_lr = 0.59                        # scale learning rate
     response_up = 16                       # response upsample stride
 
@@ -67,6 +75,12 @@ class ConfigSiamRPN:
     """
     sampling related
     """
+    VID_used = True                        # whether to use VID dataset
+    GOT10K_used = False                    # whether to use GOT10K dataset
+    YTB_used = True                        # whether to use YTB dataset
+    frame_range_vid = 100                  # frame range of choosing the instance
+    frame_range_got10k = 100               # frame range of choosing the instance
+    frame_range_ytb = 1                    # frame range of choosing the instance
     exemplar_size = 127                    # exemplar size
     instance_size = 271                    # instance size
     context_amount = 0.5                   # context amount
@@ -80,8 +94,8 @@ class ConfigSiamRPN:
     """
     training related
     """
-    pretrained = True                      # whether to use the imagenet pretrained model
-    fix_former_3_layers = True             # whether to fix the first 3 layers
+    load_imagenet = True                   # whether to use the imagenet pretrained model
+    fix_former_layers = True               # whether to fix the first layers
     epoch = 50                             # total epoch for training
     start_lr = 3e-2                        # start learning rate
     end_lr = 1e-5                          # end learning rate
@@ -92,18 +106,19 @@ class ConfigSiamRPN:
     step_size = 1                          # step size of LR_Schedular
     momentum = 0.9                         # momentum of SGD
     weight_decay = 0.0005                  # weight decay of optimizator
+    clip = 10  # grad clip
     pairs_per_video_per_epoch = 12         # pairs per video(12 * 4417 = 53000)
     train_ratio = 0.99                     # training ratio of VID dataset
-    frame_range_vid = 100                  # frame range of choosing the instance
-    frame_range_ytb = 1                    # frame range of choosing the instance
+    max_translate = 12                     # max translation of random shift
     train_batch_size = 32                  # training batch size
     valid_batch_size = 16                  # validation batch size
     train_num_workers = 8                  # number of workers of train dataloader
     valid_num_workers = 8                  # number of workers of validation dataloader
-    clip = 10                              # grad clip
     log_dir = './data/logs'                # log dirs
-    data_dir = 'dataset/data_curated'      # VID trian dir
-    max_translate = 12                     # max translation of random shift
+    data_dir = 'dataset/data_curated'      # VID train dir
+    save_interval = 1                      # model save interval
+    show_interval = 100                    # info print interval
+
 
     ohem_pos = False
     ohem_neg = False
@@ -121,8 +136,6 @@ class ConfigSiamRPN:
     num_pos = 16
     num_neg = 48
     lamb = 5
-    save_interval = 1
-    show_interval = 100
     show_topK = 3
 
     """

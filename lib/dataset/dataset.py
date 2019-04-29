@@ -54,23 +54,56 @@ class SiamFCDataset(Dataset):
         idx = idx % len(self.video_names)
         video = self.video_names[idx]
         trajs = self.meta_data[video]
+        # ------------------
         # sample one trajs
+        # ------------------
         trkid = np.random.choice(list(trajs.keys()))
         traj = trajs[trkid]
         assert len(traj) > 1, "video_name: {}".format(video)
-        # sample exemplar
+        # ------------------
+        # sample example
+        # ------------------
         exemplar_idx = np.random.choice(list(range(len(traj))))
-        exemplar_name = os.path.join(self.data_dir, video, traj[exemplar_idx]+".{:02d}.x.jpg".format(trkid))
+        if config.VID_used and 'ILSVRC2015' in video:
+            frame_range = config.frame_range_vid
+            exemplar_name = glob.glob(os.path.join(self.data_dir, video,
+                                                   traj[exemplar_idx] + ".{:02d}.x*.jpg".format(trkid)))[0]
+        elif config.GOT10K_used and 'GOT10K' in video:
+            frame_range = config.frame_range_got10k
+            exemplar_name = glob.glob(os.path.join(self.data_dir, video,
+                                                   traj[exemplar_idx] + ".{}.x*.jpg".format(trkid)))[0]
+        elif config.YTB_used and 'YTB' in video:
+            frame_range = config.frame_range_ytb
+            exemplar_name = glob.glob(os.path.join(self.data_dir, video,
+                                                   traj[exemplar_idx] + ".{}.x*.jpg".format(trkid)))[0]
+        else:
+            print('WARNING: unknown dataset')
+            frame_range = config.frame_range_vid
+            exemplar_name = glob.glob(os.path.join(self.data_dir, video,
+                                                   traj[exemplar_idx] + ".{}.x*.jpg".format(trkid)))[0]
         exemplar_img = self.imread(exemplar_name)
         exemplar_img = cv2.cvtColor(exemplar_img, cv2.COLOR_BGR2RGB)
+        # ------------------
         # sample instance
-        low_idx = max(0, exemplar_idx - config.frame_range)
-        up_idx = min(len(traj), exemplar_idx + config.frame_range)
+        # ------------------
+        low_idx = max(0, exemplar_idx - frame_range)
+        up_idx = min(len(traj), exemplar_idx + frame_range)
         # create sample weight, if the sample are far away from center
         # the probability being choosen are high
         weights = self._sample_weights(exemplar_idx, low_idx, up_idx, config.sample_type)
         instance = np.random.choice(traj[low_idx:exemplar_idx] + traj[exemplar_idx+1:up_idx], p=weights)
-        instance_name = os.path.join(self.data_dir, video, instance+".{:02d}.x.jpg".format(trkid))
+        if config.VID_used and 'ILSVRC2015' in video:
+            instance_name = glob.glob(os.path.join(self.data_dir, video,
+                                                   instance + ".{:02d}.x*.jpg".format(trkid)))[0]
+        elif config.GOT10K_used and 'GOT10K' in video:
+            instance_name = glob.glob(os.path.join(self.data_dir, video,
+                                                   instance + ".{}.x*.jpg".format(trkid)))[0]
+        elif config.YTB_used and 'YTB' in video:
+            instance_name = glob.glob(os.path.join(self.data_dir, video,
+                                                   instance + ".{}.x*.jpg".format(trkid)))[0]
+        else:
+            instance_name = glob.glob(os.path.join(self.data_dir, video,
+                                                   instance + ".{}.x*.jpg".format(trkid)))[0]
         instance_img = self.imread(instance_name)
         instance_img = cv2.cvtColor(instance_img, cv2.COLOR_BGR2RGB)
         if np.random.rand(1) < config.gray_ratio:
@@ -78,10 +111,14 @@ class SiamFCDataset(Dataset):
             exemplar_img = cv2.cvtColor(exemplar_img, cv2.COLOR_GRAY2RGB)
             instance_img = cv2.cvtColor(instance_img, cv2.COLOR_RGB2GRAY)
             instance_img = cv2.cvtColor(instance_img, cv2.COLOR_GRAY2RGB)
+        # ------------------
         # data augmentation
+        # ------------------
         exemplar_img = self.z_transforms(exemplar_img)
         instance_img = self.x_transforms(instance_img)
+        # ------------------
         # create target
+        # ------------------
         mask, weight = self.scoremap
 
         return exemplar_img, instance_img, mask, weight
@@ -154,21 +191,35 @@ class SiamRPNDataset(Dataset):
             idx = idx % len(self.video_names)
             video = self.video_names[idx]
             trajs = self.meta_data[video]
+            # ------------------
             # sample one trajs
+            # ------------------
             if len(trajs.keys()) == 0:
                 continue
             trkid = np.random.choice(list(trajs.keys()))
             traj = trajs[trkid]
             assert len(traj) > 1, "video_name: {}".format(video)
+            # ------------------
             # sample exemplar
+            # ------------------
             exemplar_idx = np.random.choice(list(range(len(traj))))
-            if 'ILSVRC2015' in video:
-                exemplar_name = \
-                    glob.glob(os.path.join(self.data_dir, video, traj[exemplar_idx] + ".{:02d}.x*.jpg".format(trkid)))[
-                        0]
+            if config.VID_used and 'ILSVRC2015' in video:
+                frame_range = config.frame_range_vid
+                exemplar_name = glob.glob(os.path.join(self.data_dir, video,
+                                                       traj[exemplar_idx] + ".{:02d}.x*.jpg".format(trkid)))[0]
+            elif config.GOT10K_used and 'GOT10K' in video:
+                frame_range = config.frame_range_got10k
+                exemplar_name = glob.glob(os.path.join(self.data_dir, video,
+                                                       traj[exemplar_idx] + ".{}.x*.jpg".format(trkid)))[0]
+            elif config.YTB_used and 'YTB' in video:
+                frame_range = config.frame_range_ytb
+                exemplar_name = glob.glob(os.path.join(self.data_dir, video,
+                                                       traj[exemplar_idx] + ".{}.x*.jpg".format(trkid)))[0]
             else:
-                exemplar_name = \
-                    glob.glob(os.path.join(self.data_dir, video, traj[exemplar_idx] + ".{}.x*.jpg".format(trkid)))[0]
+                print('WARNING: unknown dataset')
+                frame_range = config.frame_range_vid
+                exemplar_name = glob.glob(os.path.join(self.data_dir, video,
+                                                       traj[exemplar_idx] + ".{}.x*.jpg".format(trkid)))[0]
             exemplar_gt_w, exemplar_gt_h, exemplar_w_image, exemplar_h_image = \
                 float(exemplar_name.split('_')[-4]), float(exemplar_name.split('_')[-3]), \
                 float(exemplar_name.split('_')[-2]), float(exemplar_name.split('_')[-1][:-4])
@@ -180,22 +231,27 @@ class SiamRPNDataset(Dataset):
                 continue
             exemplar_img = self.imread(exemplar_name)
             exemplar_img = cv2.cvtColor(exemplar_img, cv2.COLOR_BGR2RGB)
+            # ------------------
             # sample instance
-            if 'ILSVRC2015' in exemplar_name:
-                frame_range = config.frame_range_vid
-            else:
-                frame_range = config.frame_range_ytb
+            # ------------------
             low_idx = max(0, exemplar_idx - frame_range)
             up_idx = min(len(traj), exemplar_idx + frame_range + 1)
             # create sample weight, if the sample are far away from center
             # the probability being choosen are high
             weights = self._sample_weights(exemplar_idx, low_idx, up_idx, config.sample_type)
             instance = np.random.choice(traj[low_idx:exemplar_idx] + traj[exemplar_idx + 1:up_idx], p=weights)
-            if 'ILSVRC2015' in video:
-                instance_name = \
-                    glob.glob(os.path.join(self.data_dir, video, instance + ".{:02d}.x*.jpg".format(trkid)))[0]
+            if config.VID_used and 'ILSVRC2015' in video:
+                instance_name = glob.glob(os.path.join(self.data_dir, video,
+                                    instance + ".{:02d}.x*.jpg".format(trkid)))[0]
+            elif config.GOT10K_used and 'GOT10K' in video:
+                instance_name = glob.glob(os.path.join(self.data_dir, video,
+                                    instance + ".{}.x*.jpg".format(trkid)))[0]
+            elif config.YTB_used and 'YTB' in video:
+                instance_name = glob.glob(os.path.join(self.data_dir, video,
+                                    instance + ".{}.x*.jpg".format(trkid)))[0]
             else:
-                instance_name = glob.glob(os.path.join(self.data_dir, video, instance + ".{}.x*.jpg".format(trkid)))[0]
+                instance_name = glob.glob(os.path.join(self.data_dir, video,
+                                    instance + ".{}.x*.jpg".format(trkid)))[0]
             instance_gt_w, instance_gt_h, instance_w_image, instance_h_image = \
                 float(instance_name.split('_')[-4]), float(instance_name.split('_')[-3]), \
                 float(instance_name.split('_')[-2]), float(instance_name.split('_')[-1][:-4])
@@ -212,15 +268,21 @@ class SiamRPNDataset(Dataset):
                 exemplar_img = cv2.cvtColor(exemplar_img, cv2.COLOR_GRAY2RGB)
                 instance_img = cv2.cvtColor(instance_img, cv2.COLOR_RGB2GRAY)
                 instance_img = cv2.cvtColor(instance_img, cv2.COLOR_GRAY2RGB)
+            # ------------------
             # data augmentation
+            # ------------------
             exemplar_img, exemplar_gt_w, exemplar_gt_h = self.z_transforms(exemplar_img)
             instance_img, gt_cx, gt_cy, gt_w, gt_h = self.x_transforms(instance_img)
+            # ------------------
             # robust test
+            # ------------------
             # frame = add_box_img(exemplar_img, np.array([[0, 0, exemplar_gt_w, exemplar_gt_h]]), color=(0, 255, 0))
             # cv2.imwrite('exemplar_img.jpg', frame)
             # frame = add_box_img(instance_img_1, np.array([[gt_cx, gt_cy, gt_w, gt_h]]), color=(0, 255, 0))
             # cv2.imwrite('instance_img.jpg', frame)
+            # ------------------
             # create target
+            # ------------------
             regression_target, conf_target = self.compute_target(self.anchors,
                                                 np.array(list(map(round, [gt_cx, gt_cy, gt_w, gt_h]))))
 
