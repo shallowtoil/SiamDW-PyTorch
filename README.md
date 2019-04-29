@@ -51,17 +51,81 @@ The repo is still under development.
 ### Benchmark result
 - OTB2015
 
-`CIRfc_baseline` tracking with original model `pretrianed/CIResNet22.pth` from the author 
+These experiments currently are not conducted yet. I'll keep updating the result once they're done.
+<center>
+<table class="table table-bordered table-striped table-condensed"><tbody>
+   <tr>
+      <td colspan = 2 rowspan=2>Models</td>
+      <td colspan = 6 style="text-align: center;">Training data</td>
+   </tr>
+   <tr>
+      <td>VID</td>
+      <td>GOT10K</td>
+      <td>VID+GOT10K</td>
+      <td>VID+YTB</td>
+      <td>GOT10K+YTB</td>
+      <td>VID+GOT10K+YTB</td>
+   </tr>
+   <tr>
+      <td rowspan = 2 style="text-align: center;">SiamRPN_Alex</td>
+      <td>AUC</td>
+      <td>0.626(0.637)</td>
+      <td>-(-)</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+   </tr>
+   <tr>
+      <td>Prec.</td>
+      <td>-(-)</td>
+      <td>-(-)</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+   </tr>
+   <tr>
+      <td rowspan = 2>SiamFC_Res22</td>
+      <td>AUC</td>
+      <td>0.632(0.639)</td>
+      <td>-(0.654)</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+   </tr>
+   <tr>
+      <td>Prec.</td>
+      <td>0.831(0.839)</td>
+      <td>-(-)</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+   </tr>
 
-`CIRfc_pretrained` tracking with model `models/CIResNet22_pretrained.pth` trained from scratch
-
-
-Models  | Success | Percision
-:-------------: | :-------------: | :-------------:
-SiamFC_Res22  | 0.639 | 0.839
-SiamRPN_Res22  | 0.662 | 0.872
-SiamFC_Res22(mine)  | 0.632 | 0.831
-SiamRPN_Res22(mine)  |  |
+   <tr>
+      <td rowspan=2 style="text-align: center;">SiamRPN_Res22</td>
+      <td>AUC</td>
+      <td>-(0.662)</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+   </tr>
+   <tr>
+      <td>Prec.</td>
+      <td>-(0.872)</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+   </tr>
+ 
+</table></center>
 
 <center class="half">
    <img src="https://i.postimg.cc/sxZCTVZN/success-plots.png" width = "400"/> <img src="https://i.postimg.cc/Y9PwN4jF/precision-plots.png" width = "400"/>
