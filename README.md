@@ -1,4 +1,4 @@
-# SiamDW-Pytorch
+# SiamDW-PyTorch
 
 This is a Pytorch implementation of SiamDW with train codes, which is mainly based on [deeper_wider_siamese_trackers](https://github.com/cvpr2019/deeper_wider_siamese_trackers) and [Siamese-RPN](https://github.com/HelloRicky123/Siamese-RPN). I re-format my code with reference to the author's official code [SiamDW](https://github.com/researchmm/SiamDW). 
 
@@ -51,88 +51,9 @@ The repo is still under development.
 ### Benchmark result
 - OTB2015
 
-These experiments currently are not conducted yet. I'll keep updating the result once they're done.
-<center>
-<table class="table table-bordered table-striped table-condensed"><tbody>
-   <tr>
-      <td colspan = 2 rowspan=2>Models</td>
-      <td colspan = 6 style="text-align: center;">Training data</td>
-   </tr>
-   <tr>
-      <td>VID</td>
-      <td>GOT10K</td>
-      <td>VID+GOT10K</td>
-      <td>VID+YTB</td>
-      <td>GOT10K+YTB</td>
-      <td>VID+GOT10K+YTB</td>
-   </tr>
-   <tr>
-      <td rowspan = 2 style="text-align: center;">SiamRPN_Alex</td>
-      <td>AUC</td>
-      <td>0.626(0.637)</td>
-      <td>-(-)</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>Prec.</td>
-      <td>-(-)</td>
-      <td>-(-)</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-   </tr>
-   <tr>
-      <td rowspan = 2>SiamFC_Res22</td>
-      <td>AUC</td>
-      <td>0.632(0.639)</td>
-      <td>-(0.654)</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>Prec.</td>
-      <td>0.831(0.839)</td>
-      <td>-(-)</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-   </tr>
-
-   <tr>
-      <td rowspan=2 style="text-align: center;">SiamRPN_Res22</td>
-      <td>AUC</td>
-      <td>-(0.662)</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>Prec.</td>
-      <td>-(0.872)</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-   </tr>
- 
-</table></center>
-
 <center class="half">
    <img src="https://i.postimg.cc/sxZCTVZN/success-plots.png" width = "400"/> <img src="https://i.postimg.cc/Y9PwN4jF/precision-plots.png" width = "400"/>
 </center>
-
-### Future work
-- [ ] Further performance improvement of `SiamFC+` and `SiamRPN+`. Welcome to any advice and suggestions. My email address is jensen.zhoujh@qq.com.
 
 ### Reference
 [1] Zhipeng Zhang, Houwen Peng. Deeper and Wider Siamese Networks for Real-Time Visual Tracking. Conference on Computer Vision and Pattern Recognition (CVPR). IEEE, 2019.
